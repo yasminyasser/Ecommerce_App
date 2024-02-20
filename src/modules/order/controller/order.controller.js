@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import cartModel from "../../../../DB/model/Cart.model.js";
 import couponModel from "../../../../DB/model/Coupon.model.js";
 import orderModel from "../../../../DB/model/Order.model.js";
