@@ -1,55 +1,55 @@
-import {Schema , Types, model } from 'mongoose'
+import mongoose, { Schema, model, Types } from "mongoose";
 
-const userSchema = new Schema ({
-    userName : {
-        type : String , 
-        required : [true , "name must be required"] ,
-        min : [3,'minimum length 3 char'],
-        max : [20,'max length 20 char'],
-
+const userSchema = new Schema(
+  {
+    userName: {
+      type: String,
+      required: [true, "name must be required"],
+      min: [3, "minimum length 3 char"],
+      max: [20, "max length 20 char"],
     },
-     email:{
-        type : String , 
-        required : [ , 'email must be required'] ,
-        unique : [true, 'email must be unique']
-     },
-     password :{
-        type : String , 
-        required : [true, 'password must be required'] 
-     },
-    gender:{
-        type : String , 
-        enum : ['female','male'],
-        default : 'female'
+    email: {
+      type: String,
+      required: [, "email must be required"],
+      unique: [true, "email must be unique"],
     },
-    phone : String , 
-    role :{
-        type:String,
-        default : 'User',
-        enum :['User','Admin']
-
+    password: {
+      type: String,
+      required: [true, "password must be required"],
     },
-    status:{
-        type:String,
-        default :'Offline',
-        enum : ['Offline','Online']
+    gender: {
+      type: String,
+      enum: ["female", "male"],
+      default: "female",
     },
-    confirmEmail : {
-        type : Boolean , 
-        default : false 
+    phone: String,
+    role: {
+      type: String,
+      default: "User",
+      enum: ["User", "Admin"],
     },
-    address : String ,
-    image : String,
+    status: {
+      type: String,
+      default: "Offline",
+      enum: ["Offline", "Online"],
+    },
+    confirmEmail: {
+      type: Boolean,
+      default: false,
+    },
+    address: String,
+    image: String,
     isDeleted: {
-        type: Boolean,
-        default: false,
-      },
-      DOB : String,
-      code : String
-      //wishList :[]
-},{timestamps:true})
+      type: Boolean,
+      default: false,
+    },
+    DOB: String,
+    code: String,
+    //wishList :[]
+  },
+  { timestamps: true }
+);
 
+const userModel = mongoose.model.User || model("User", userSchema);
 
-const userModel = model('User', userSchema)
-
-export default userModel
+export default userModel;
