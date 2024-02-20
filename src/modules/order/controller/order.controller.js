@@ -116,17 +116,17 @@ export const createOrder = asyncHandler(async (req, res, next) => {
     invoice_nr: order._id.toString(),
     createAt: order.createdAt,
   };
-  //createInvoice(invoice, "invoice.pdf");
-  // await sendEmail({
-  //   to: req.user.email,
-  //   subject: "invoice",
-  //   attachments: [
-  //     {
-  //       path: "invoice.pdf",
-  //       application:'application/pdf'
-  //     },
-  //   ],
-  // });
+  createInvoice(invoice, "invoice.pdf");
+  await sendEmail({
+    to: req.user.email,
+    subject: "invoice",
+    attachments: [
+      {
+        path: "invoice.pdf",
+        application:'application/pdf'
+      },
+    ],
+  });
 
   //payment
   //1-payment method card
