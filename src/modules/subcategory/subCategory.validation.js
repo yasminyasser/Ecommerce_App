@@ -9,7 +9,7 @@ export const oneSubCategorySchema = joi.object({
 export const addSubCategorySchema = joi.object({
     name : joi.string().max(15).min(2).trim().required(),
     file : generalfields.file.required(),
-    categoryId : generalfields.id
+    categoryId: generalfields.id
 }).required()
 
 export const updateSubCategorySchema = joi.object({
