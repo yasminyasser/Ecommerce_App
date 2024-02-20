@@ -157,7 +157,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
           quantity: element.quantity,
         };
       }),
-      discounts:couponName? [{coupon:createCoupon.id}] : []
+      discounts: couponName ? [{ coupon: createCoupon.id }] : [],
     });
     return res.json({
       message: "done",
