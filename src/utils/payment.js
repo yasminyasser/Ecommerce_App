@@ -4,7 +4,7 @@ async function payment({
     mode = 'payment',
     payment_method_types = ['card'],
     discounts = [],
-    metada = {},
+    metadata = {},
     customer_email,
     success_url = process.env.SUCCESS_URL,
     cancel_url = process.env.CANCEL_URL,
@@ -13,7 +13,7 @@ async function payment({
     const session = await stripe.checkout.sessions.create({
         line_items,
         mode,
-        metada,
+        metadata,
         payment_method_types,
         discounts,
         customer_email,
