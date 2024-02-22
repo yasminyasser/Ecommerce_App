@@ -139,7 +139,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
       });
     }
     const session = await payment({
-      metada: {
+      metadata: {
         orderId: order._id.toString(),
       },
       success_url: `${process.env.SUCCESS_URL}/${order._id}`,
