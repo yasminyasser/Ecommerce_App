@@ -140,7 +140,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
     }
     const session = await payment({
       metada: {
-        orderId: order._id,
+        orderId: order._id.toString(),
       },
       success_url: `${process.env.SUCCESS_URL}/${order._id}`,
       cancel_url: `${process.env.CANCEL_URL}/${order._id}`,
@@ -245,7 +245,10 @@ export const webhook = asyncHandler(async (req, res, next) => {
     // Handle the event
   if (event.type == "checkout.session.completed") {
     let orderId = event.data.object.metadata.orderId;
-    const update = await orderModel.updateOne({ _id: orderId }, { status: 'Placed' })
+    const update = await orderModel.updateOne(
+      { _id: orderId },
+      { status: "Placed" }
+    );
     res.json({message:"done"}) //back in stripe
   }
   return next(new Error('failed to payment'),{cause:500})
