@@ -249,7 +249,7 @@ export const webhook = asyncHandler(async (req, res, next) => {
       { _id: orderId },
       { status: "Placed" }
     );
-    res.json({message:"done"}) //back in stripe
+   return res.json({message:"done"}) //back in stripe
   }
   return next(new Error('failed to payment'),{cause:500})
 })
