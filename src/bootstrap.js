@@ -9,7 +9,15 @@ import cartRouter from "./modules/cart/cart.router.js";
 import orderRouter from "./modules/order/order.router.js";
 import { globalError } from './utils/asynchandler.js'
 const bootstrap = (app, express) => {
-app.use(express.json({}))
+    app.use((req,res,next) => {
+        if (req.originalUrl == '/order/webhook') {
+         return   next();
+
+        } else {
+         express.json()(req, res, next); 
+
+        }
+})
 //setup API routing
 app.use('/auth',authRouter)
 // app.use('/user',userRouter)

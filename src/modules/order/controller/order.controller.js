@@ -227,3 +227,26 @@ export const deliveredOrder = asyncHandler(async (req, res, next) => {
 
 //get all orders of user with prices
 //onway- rejected
+
+export const webhook = asyncHandler(async (req, ews, next) => {
+     const stripe = new Stripe(process.env.API_KEY_PAYMENT);
+    const endpointSecret = process.env.END_POINT_SECRET;
+
+    const sig = request.headers["stripe-signature"];
+
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Handle the event
+  if (event.type == "checkout.session.completed") {
+    let orderId = event.data.object.metadata.orderId;
+    const update = await orderModel.updateOne({ _id: orderId }, { status: 'Placed' })
+    res.json({message:"done"}) //back in stripe
+  }
+  return next(new Error('failed to payment'),{cause:500})
+})
