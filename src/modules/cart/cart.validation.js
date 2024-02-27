@@ -12,3 +12,9 @@ export const deleteFromCartSchema = joi
     productId: generalfields.id,
   })
   .required();
+
+  export const authSchema = joi
+    .object({
+      auth: joi.string().required(),
+    })
+    .required();

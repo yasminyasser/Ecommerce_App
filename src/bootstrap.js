@@ -7,6 +7,7 @@ import brandRouter from './modules/brand/brand.router.js'
 import productRouter from './modules/product/product.router.js'
 import cartRouter from "./modules/cart/cart.router.js";
 import orderRouter from "./modules/order/order.router.js";
+import userRouter from "./modules/user/user.router.js";
 import { globalError } from './utils/asynchandler.js'
 const bootstrap = (app, express) => {
     app.use((req,res,next) => {
@@ -20,7 +21,7 @@ const bootstrap = (app, express) => {
 })
 //setup API routing
 app.use('/auth',authRouter)
-// app.use('/user',userRouter)
+app.use('/user',userRouter)
 app.use('/product',productRouter)
 app.use('/category',categoryRouter)
 app.use('/subCategory',subCategoryRouter)

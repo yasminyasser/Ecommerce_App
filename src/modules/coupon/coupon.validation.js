@@ -21,3 +21,10 @@ export const updateCouponSchema = joi.object({
     expireIn: joi.date().greater(new Date()),
     couponId : generalfields.id
 }).required()
+
+export const authSchema = joi
+  .object({
+    auth: joi.string().required(),
+  })
+  .required();
+

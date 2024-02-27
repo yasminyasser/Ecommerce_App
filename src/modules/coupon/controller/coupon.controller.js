@@ -28,7 +28,10 @@ export const allCoupons = asyncHandler(async(req,res,next)=>{
 })
 
 export const oneCoupon = asyncHandler(async(req,res,next)=>{
-    const oneCoupon = await couponModel.findById({_id : req.params.couponId})
+    const oneCoupon = await couponModel.findById({ _id: req.params.couponId })
+    if (!oneCoupon) {
+                return next(new Error("coupon not found", { cause: 404 }));
+    }
     return res.status(200).json({message:"done",oneCoupon}) 
     })
 

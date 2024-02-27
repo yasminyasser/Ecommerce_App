@@ -2,15 +2,27 @@ import mongoose, { Schema, model, Types } from "mongoose";
 
 const userSchema = new Schema(
   {
-    userName: {
+    firstName: {
       type: String,
-      required: [true, "name must be required"],
+      required: [true, "firstName required"],
       min: [3, "minimum length 3 char"],
       max: [20, "max length 20 char"],
+      lowercase: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, "lastName required"],
+      min: [3, "minimum length 3 char"],
+      max: [20, "max length 20 char"],
+      lowercase: true,
+    },
+    userName: {
+      type: String,
+      unique: [true, "userNmae must be unique"],
     },
     email: {
       type: String,
-      required: [, "email must be required"],
+      required: [true, "email must be required"],
       unique: [true, "email must be unique"],
     },
     password: {
@@ -22,7 +34,11 @@ const userSchema = new Schema(
       enum: ["female", "male"],
       default: "female",
     },
-    phone: String,
+    mobileNumber: {
+      type: String,
+      unique: [true, "mobileNumber must be unique"],
+      required: [true, "mobileNumber required"],
+    },
     role: {
       type: String,
       default: "User",
@@ -45,7 +61,12 @@ const userSchema = new Schema(
     },
     DOB: String,
     code: String,
-    //wishList :[]
+    wishList: [
+      {
+        type: Types.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
   { timestamps: true }
 );

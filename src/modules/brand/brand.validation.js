@@ -16,3 +16,9 @@ export const updateBrandSchema = joi.object({
     file : generalfields.file,
     brandId : generalfields.id
 }).required()
+
+export const authSchema = joi
+  .object({
+    auth: joi.string().required(),
+  })
+  .required();

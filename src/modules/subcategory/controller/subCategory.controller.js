@@ -34,8 +34,11 @@ export const addSubCategory = asyncHandler(async(req,res,next)=>{
 
 })
 //get all SubCategories
-export const allSubCategories =asyncHandler(async(req,res,next)=>{ 
-    const {categoryId} = req.params
+export const allSubCategories = asyncHandler(async (req, res, next) => { 
+     const { categoryId } = req.params;
+     if (!(await categoryModel.findById({ _id: categoryId }))) {
+       return next(new Error("category not found", { cause: 404 }));
+     }
     const allSubCategories = await SubCategoryModel.find({categoryId}).populate({
         path : 'categoryId'
     })
@@ -43,10 +46,17 @@ export const allSubCategories =asyncHandler(async(req,res,next)=>{
 })
 
 //get one subCategory
-export const oneSubCategory = asyncHandler(async(req,res,next)=>{
+export const oneSubCategory = asyncHandler(async (req, res, next) => {
+    const { categoryId } = req.params;
+    if (!(await categoryModel.findById({ _id: categoryId }))) {
+      return next(new Error("category not found", { cause: 404 }));
+    }
 const oneSubCategory = await SubCategoryModel.findById({_id : req.params.subCategoryId}).populate({
     path : 'categoryId'
 })
+    if (!oneSubCategory) {
+              return next(new Error("subcategory not found", { cause: 404 }));
+    }
 return res.status(200).json({message:"done",oneSubCategory}) 
 })
 //check subcategory exist or not 
@@ -54,7 +64,11 @@ return res.status(200).json({message:"done",oneSubCategory})
 //2-check name exist or not --> change slug
 //3- upload image --> add new photo --> delete old image
 //4- update category
-export const updateSubCategory = asyncHandler(async(req,res,next)=>{
+export const updateSubCategory = asyncHandler(async (req, res, next) => {
+      const { categoryId } = req.params;
+      if (!(await categoryModel.findById({ _id: categoryId }))) {
+        return next(new Error("category not found", { cause: 404 }));
+      }
     const {subCategoryId} = req.params
     const subCategory_exist = await SubCategoryModel.findById({_id : subCategoryId})
     if (! subCategory_exist) {

@@ -37,7 +37,7 @@ export const createOrder = asyncHandler(async (req, res, next) => {
     if (!cart || !cart.products.length) {
       return next(new Error("invalid cart"), { cause: 400 });
     }
-    products = cart.products.toObject();
+    products = cart.products.toObject()
   }
   for (const product of products) {
     const productexist = await productModel.findOne({
@@ -47,13 +47,20 @@ export const createOrder = asyncHandler(async (req, res, next) => {
     if (!productexist) {
       return next(new Error("invalid product"), { cause: 400 });
     }
+    console.log(products)
+   
     //check products in cart
-    //  const productIncart = await cartModel.findOne({userId:req.user._id,
-    //    _id: product.productId,
-    //  });
-    //  if (!productIncart) {
-    //    return next(new Error("product not found in cart"), { cause: 404 });
-    //  }
+    const productIds = products.map((product) => product.productId);
+
+    const productIncart = await cartModel.findOne({
+      userId: req.user._id,
+      "products.productId": { $in: productIds },
+    })
+
+    if (!productIncart) {
+      return next(new Error("product not found in cart"), { cause: 404 });
+    }
+   
     product.name = productexist.name;
     product.unitPrice = productexist.totalPrice;
     product.finalPrice = product.unitPrice * product.quantity;
@@ -203,8 +210,7 @@ export const cancelOrder = asyncHandler(async (req, res, next) => {
     }
     order.status = "Canceld";
     await order.save();
-    return res.status(200).json({ message: "done", order });
-    c;
+    return res.status(200).json({ message: "done", order })
   } else {
     return next(new Error("you can't cancel the order"), { cause: 400 });
   }

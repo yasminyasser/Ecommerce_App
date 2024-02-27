@@ -17,4 +17,7 @@ export const updatecategorySchema = joi.object({
     categoryId : generalfields.id
 }).required()
 
+export const authSchema = joi.object({
+  auth: joi.string().required(),
+}).required();
 

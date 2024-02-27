@@ -18,3 +18,9 @@ export const updateSubCategorySchema = joi.object({
     subCategoryId : generalfields.id,
     categoryId : generalfields.id
 }).required()
+
+export const authSchema = joi
+  .object({
+    auth: joi.string().required(),
+  })
+  .required();

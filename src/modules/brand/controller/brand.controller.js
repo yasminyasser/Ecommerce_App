@@ -30,9 +30,12 @@ export const allBrands =asyncHandler(async(req,res,next)=>{
     const allBrands = await brandModel.find({})
     return res.status(200).json({message:"done",allBrands}) 
 })
-//get one category
+//get one brand
 export const oneBrand = asyncHandler(async(req,res,next)=>{
-const oneBrand = await brandModel.findById({_id : req.params.brandId})
+    const oneBrand = await brandModel.findById({ _id: req.params.brandId })
+    if (!oneBrand) {
+                return next(new Error("brand not found", { cause: 404 }));
+    }
 return res.status(200).json({message:"done",oneBrand}) 
 })
 

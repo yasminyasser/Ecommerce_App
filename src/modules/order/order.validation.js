@@ -38,4 +38,10 @@ export const cancelOrderSchema = joi
     .object({
       orderId: generalfields.id,
     })
+  .required();
+    
+  export const authSchema = joi
+    .object({
+      auth: joi.string().required(),
+    })
     .required();
